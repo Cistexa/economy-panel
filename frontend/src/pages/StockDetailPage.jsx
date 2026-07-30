@@ -1,18 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { 
   ArrowLeft, 
   TrendingUp, 
   TrendingDown, 
-  DollarSign, 
-  Activity, 
-  Layers, 
-  Globe, 
   Search, 
   PlusCircle, 
-  Calendar,
-  BarChart2,
-  ShieldCheck
+  BarChart2
 } from 'lucide-react';
 import api from '../api/axios';
 import LoadingSpinner from '../components/common/LoadingSpinner';
@@ -26,12 +20,11 @@ const StockDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Search input state on the detail page
   const [searchInput, setSearchInput] = useState('');
-  // Timeframe selector for chart (1M, 1Y)
   const [timeframe, setTimeframe] = useState('1Y');
-  // Hovered chart point
-  const [hoveredPoint, setHoveredPoint] = useState(null);
+  const [hoverIndex, setHoverIndex] = useState(null);
+
+  const chartContainerRef = useRef(null);
 
   useEffect(() => {
     const fetchDetail = async () => {
@@ -89,50 +82,77 @@ const StockDetailPage = () => {
   const isPos = stock.dayChange >= 0;
   const currencySymbol = stock.currency === 'TRY' ? '₺' : '$';
 
-  // Filter chart history based on timeframe tab
+  // Filter chart points based on timeframe tab
   const rawChart = stock.chartHistory || [];
   const chartPoints = timeframe === '1M' ? rawChart.slice(-30) : rawChart;
 
-  // Calculate min, max for SVG scaling
   const prices = chartPoints.map((p) => p.price);
   const minPrice = prices.length > 0 ? Math.min(...prices) : stock.price;
   const maxPrice = prices.length > 0 ? Math.max(...prices) : stock.price;
   const priceRange = maxPrice - minPrice || 1;
 
-  // SVG dimensions
-  const svgWidth = 700;
-  const svgHeight = 220;
-  const padding = 20;
+  // Chart dimensions & scaling
+  const svgWidth = 800;
+  const svgHeight = 260;
+  const paddingTop = 25;
+  const paddingBottom = 35;
+  const paddingLeft = 15;
+  const paddingRight = 15;
 
-  // Generate SVG path coordinates
-  const svgPoints = chartPoints.map((pt, idx) => {
-    const x = padding + (idx / Math.max(chartPoints.length - 1, 1)) * (svgWidth - padding * 2);
-    const y = svgHeight - padding - ((pt.price - minPrice) / priceRange) * (svgHeight - padding * 2);
+  const chartInnerWidth = svgWidth - paddingLeft - paddingRight;
+  const chartInnerHeight = svgHeight - paddingTop - paddingBottom;
+
+  // Compute SVG coordinates
+  const pointsCoords = chartPoints.map((pt, idx) => {
+    const x = paddingLeft + (idx / Math.max(chartPoints.length - 1, 1)) * chartInnerWidth;
+    const y = paddingTop + (1 - (pt.price - minPrice) / priceRange) * chartInnerHeight;
     return { x, y, pt };
   });
 
-  const pathD = svgPoints.reduce((acc, p, idx) => `${acc} ${idx === 0 ? 'M' : 'L'} ${p.x} ${p.y}`, '');
-  const areaD = `${pathD} L ${svgPoints[svgPoints.length - 1]?.x || svgWidth} ${svgHeight} L ${padding} ${svgHeight} Z`;
+  const pathD = pointsCoords.reduce(
+    (acc, p, idx) => `${acc} ${idx === 0 ? 'M' : 'L'} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`,
+    ''
+  );
+
+  const areaD = pointsCoords.length > 0
+    ? `${pathD} L ${pointsCoords[pointsCoords.length - 1].x.toFixed(1)} ${svgHeight - paddingBottom} L ${paddingLeft} ${svgHeight - paddingBottom} Z`
+    : '';
+
+  // Handle MouseMove on SVG container for interactive crosshair tracking
+  const handleMouseMove = (e) => {
+    if (!chartContainerRef.current || pointsCoords.length === 0) return;
+    const rect = chartContainerRef.current.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const relativeX = (mouseX / rect.width) * svgWidth;
+
+    // Find nearest point
+    let closestIdx = 0;
+    let minDiff = Infinity;
+    pointsCoords.forEach((p, idx) => {
+      const diff = Math.abs(p.x - relativeX);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestIdx = idx;
+      }
+    });
+
+    setHoverIndex(closestIdx);
+  };
+
+  const handleMouseLeave = () => {
+    setHoverIndex(null);
+  };
+
+  const activePoint = hoverIndex !== null ? pointsCoords[hoverIndex] : null;
 
   return (
     <div className="stock-detail-page">
-      {/* Top Bar: Navigation & Search */}
+      {/* Top Bar: Navigation */}
       <div className="detail-top-bar">
         <button className="btn-back" onClick={() => navigate('/stocks')}>
           <ArrowLeft size={18} />
           <span>Hisseler Listesi</span>
         </button>
-
-        <form onSubmit={handleSearchSubmit} className="detail-search-box glass-panel">
-          <Search size={16} className="search-icon" />
-          <input
-            type="text"
-            placeholder="Başka bir hisse incele (Örn: THYAO, AAPL, NVDA, ASELS)..."
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-          />
-          <button type="submit" className="btn-search-submit">İncele</button>
-        </form>
       </div>
 
       {/* Main Stock Header Card */}
@@ -227,50 +247,92 @@ const StockDetailPage = () => {
         </div>
 
         {/* Chart SVG */}
-        <div className="chart-svg-container">
-          {hoveredPoint && (
-            <div className="chart-tooltip" style={{ left: `${(hoveredPoint.x / svgWidth) * 100}%` }}>
-              <span className="tt-date">{hoveredPoint.pt.date}</span>
-              <span className="tt-price">{currencySymbol}{hoveredPoint.pt.price}</span>
+        <div
+          className="chart-svg-container"
+          ref={chartContainerRef}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+        >
+          {activePoint && (
+            <div
+              className="chart-tooltip"
+              style={{
+                left: `${(activePoint.x / svgWidth) * 100}%`,
+                top: `${(activePoint.y / svgHeight) * 100}%`,
+              }}
+            >
+              <span className="tt-date">{activePoint.pt.date}</span>
+              <span className="tt-price">{currencySymbol}{activePoint.pt.price}</span>
             </div>
           )}
 
-          <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`} className="price-svg" preserveAspectRatio="none">
+          <svg
+            viewBox={`0 0 ${svgWidth} ${svgHeight}`}
+            className="price-svg"
+            preserveAspectRatio="none"
+          >
             <defs>
               <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor={isPos ? '#10b981' : '#ef4444'} stopOpacity="0.35" />
+                <stop offset="0%" stopColor={isPos ? '#10b981' : '#ef4444'} stopOpacity="0.4" />
                 <stop offset="100%" stopColor={isPos ? '#10b981' : '#ef4444'} stopOpacity="0.0" />
               </linearGradient>
             </defs>
 
-            {/* Background area fill */}
-            {pathD && <path d={areaD} fill="url(#chartGradient)" />}
+            {/* Horizontal Grid Lines */}
+            <line x1={paddingLeft} y1={paddingTop} x2={svgWidth - paddingRight} y2={paddingTop} stroke="rgba(255,255,255,0.06)" strokeDasharray="4 4" />
+            <line x1={paddingLeft} y1={paddingTop + chartInnerHeight * 0.5} x2={svgWidth - paddingRight} y2={paddingTop + chartInnerHeight * 0.5} stroke="rgba(255,255,255,0.06)" strokeDasharray="4 4" />
+            <line x1={paddingLeft} y1={svgHeight - paddingBottom} x2={svgWidth - paddingRight} y2={svgHeight - paddingBottom} stroke="rgba(255,255,255,0.06)" />
 
-            {/* Trend line */}
+            {/* Background area fill */}
+            {areaD && <path d={areaD} fill="url(#chartGradient)" />}
+
+            {/* Main Trend Line */}
             {pathD && (
               <path
                 d={pathD}
                 fill="none"
                 stroke={isPos ? '#10b981' : '#ef4444'}
-                strokeWidth="3"
+                strokeWidth="2.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
             )}
 
-            {/* Interactive hover points */}
-            {svgPoints.map((p, i) => (
-              <circle
-                key={i}
-                cx={p.x}
-                cy={p.y}
-                r="4"
-                className="chart-dot"
-                onMouseEnter={() => setHoveredPoint(p)}
-                onMouseLeave={() => setHoveredPoint(null)}
-              />
-            ))}
+            {/* Active Hover Crosshair Line */}
+            {activePoint && (
+              <>
+                <line
+                  x1={activePoint.x}
+                  y1={paddingTop}
+                  x2={activePoint.x}
+                  y2={svgHeight - paddingBottom}
+                  stroke="rgba(255, 255, 255, 0.4)"
+                  strokeDasharray="3 3"
+                />
+                <circle
+                  cx={activePoint.x}
+                  cy={activePoint.y}
+                  r="6"
+                  fill={isPos ? '#10b981' : '#ef4444'}
+                  stroke="#ffffff"
+                  strokeWidth="2"
+                />
+              </>
+            )}
           </svg>
+
+          {/* Date Axis Footer Labels */}
+          <div className="chart-date-axis">
+            {chartPoints.length > 0 && (
+              <>
+                <span>{chartPoints[0].date}</span>
+                <span>{chartPoints[Math.floor(chartPoints.length * 0.25)]?.date}</span>
+                <span>{chartPoints[Math.floor(chartPoints.length * 0.5)]?.date}</span>
+                <span>{chartPoints[Math.floor(chartPoints.length * 0.75)]?.date}</span>
+                <span>{chartPoints[chartPoints.length - 1].date}</span>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>

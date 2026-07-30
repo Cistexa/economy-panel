@@ -163,12 +163,19 @@ async function fetchYahooChart(yahooSymbol) {
     yearAgoPrice = validCloses[0].close;
   }
 
+  const chartHistory = validCloses.map(item => ({
+    date: new Date(item.ts).toLocaleDateString('tr-TR', { month: 'short', day: 'numeric' }),
+    fullDate: new Date(item.ts).toISOString().split('T')[0],
+    price: parseFloat(item.close.toFixed(2)),
+  }));
+
   return {
     price: currentPrice,
     dailyPreviousClose,
     monthAgoPrice,
     yearAgoPrice,
     currency: meta.currency || 'TRY',
+    chartHistory,
   };
 }
 
