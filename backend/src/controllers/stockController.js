@@ -29,8 +29,19 @@ const searchAssets = async (req, res, next) => {
   }
 };
 
+const getStockDetail = async (req, res, next) => {
+  try {
+    const { symbol } = req.params;
+    const detail = await marketService.getStockDetail(symbol);
+    res.json(detail);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getTopMovers,
   getStocks,
   searchAssets,
+  getStockDetail,
 };

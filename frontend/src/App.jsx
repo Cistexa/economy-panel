@@ -7,6 +7,7 @@ import Layout from './components/Layout/Layout';
 
 import DashboardPage from './pages/DashboardPage';
 import StocksPage from './pages/StocksPage';
+import StockDetailPage from './pages/StockDetailPage';
 import CryptoPage from './pages/CryptoPage';
 import WalletPage from './pages/WalletPage';
 import SettingsPage from './pages/SettingsPage';
@@ -27,6 +28,7 @@ function App() {
             <Route element={<Layout />}>
               <Route path="/" element={<DashboardPage />} />
               <Route path="/stocks" element={<StocksPage />} />
+              <Route path="/stocks/:symbol" element={<StockDetailPage />} />
               <Route path="/crypto" element={<CryptoPage />} />
               <Route path="/wallet" element={<WalletPage />} />
               <Route path="/settings" element={<SettingsPage />} />

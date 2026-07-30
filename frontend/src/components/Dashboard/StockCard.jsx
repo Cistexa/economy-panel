@@ -1,13 +1,19 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { TrendingUp, TrendingDown } from 'lucide-react';
 import './StockCard.css';
 
 const StockCard = ({ item, isGainer = true }) => {
+  const navigate = useNavigate();
   const change = item.changePercent;
   const isPositive = change >= 0;
 
   return (
-    <div className={`stock-card glass-panel ${isPositive ? 'gainer' : 'loser'}`}>
+    <div
+      className={`stock-card glass-panel ${isPositive ? 'gainer' : 'loser'}`}
+      style={{ cursor: 'pointer' }}
+      onClick={() => navigate(`/stocks/${item.symbol}`)}
+    >
       <div className="stock-card-header">
         <div className="symbol-info">
           <span className="stock-symbol">{item.symbol}</span>

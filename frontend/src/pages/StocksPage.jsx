@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { TrendingUp, TrendingDown, Search, Filter } from 'lucide-react';
 import api from '../api/axios';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import './StocksPage.css';
 
 const StocksPage = () => {
+  const navigate = useNavigate();
   const [stocks, setStocks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -86,7 +88,11 @@ const StocksPage = () => {
             </thead>
             <tbody>
               {filteredStocks.map((stock) => (
-                <tr key={stock.symbol}>
+                <tr
+                  key={stock.symbol}
+                  className="clickable-row"
+                  onClick={() => navigate(`/stocks/${stock.symbol}`)}
+                >
                   <td className="symbol-cell">
                     <div className="symbol-icon">{stock.symbol.slice(0, 2)}</div>
                     <div>

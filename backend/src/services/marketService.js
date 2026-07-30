@@ -1,110 +1,110 @@
 const BIST_STOCKS = [
   // Bankacılık & Finans
-  { symbol: 'GARAN',  yahooSymbol: 'GARAN.IS',  name: 'Garanti BBVA Bankası',       sector: 'Bankacılık',       exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'AKBNK',  yahooSymbol: 'AKBNK.IS',  name: 'Akbank',                     sector: 'Bankacılık',       exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'YKBNK',  yahooSymbol: 'YKBNK.IS',  name: 'Yapı ve Kredi Bankası',      sector: 'Bankacılık',       exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'ISCTR',  yahooSymbol: 'ISCTR.IS',  name: 'İş Bankası (C)',              sector: 'Bankacılık',       exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'HALKB',  yahooSymbol: 'HALKB.IS',  name: 'Halkbank',                   sector: 'Bankacılık',       exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'VAKBN',  yahooSymbol: 'VAKBN.IS',  name: 'VakıfBank',                  sector: 'Bankacılık',       exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'TSKB',   yahooSymbol: 'TSKB.IS',   name: 'TSKB Kalkınma Bankası',      sector: 'Bankacılık',       exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'GARAN', yahooSymbol: 'GARAN.IS', name: 'Garanti BBVA Bankası', sector: 'Bankacılık', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'AKBNK', yahooSymbol: 'AKBNK.IS', name: 'Akbank', sector: 'Bankacılık', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'YKBNK', yahooSymbol: 'YKBNK.IS', name: 'Yapı ve Kredi Bankası', sector: 'Bankacılık', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'ISCTR', yahooSymbol: 'ISCTR.IS', name: 'İş Bankası (C)', sector: 'Bankacılık', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'HALKB', yahooSymbol: 'HALKB.IS', name: 'Halkbank', sector: 'Bankacılık', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'VAKBN', yahooSymbol: 'VAKBN.IS', name: 'VakıfBank', sector: 'Bankacılık', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'TSKB', yahooSymbol: 'TSKB.IS', name: 'TSKB Kalkınma Bankası', sector: 'Bankacılık', exchange: 'BIST', currency: 'TRY' },
   // Holding & Yatırım
-  { symbol: 'KCHOL',  yahooSymbol: 'KCHOL.IS',  name: 'Koç Holding',                sector: 'Holding',          exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'SAHOL',  yahooSymbol: 'SAHOL.IS',  name: 'Sabancı Holding',             sector: 'Holding',          exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'ALARK',  yahooSymbol: 'ALARK.IS',  name: 'Alarko Holding',             sector: 'Holding',          exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'KCHOL', yahooSymbol: 'KCHOL.IS', name: 'Koç Holding', sector: 'Holding', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'SAHOL', yahooSymbol: 'SAHOL.IS', name: 'Sabancı Holding', sector: 'Holding', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'ALARK', yahooSymbol: 'ALARK.IS', name: 'Alarko Holding', sector: 'Holding', exchange: 'BIST', currency: 'TRY' },
   // Havacılık & Taşımacılık
-  { symbol: 'THYAO',  yahooSymbol: 'THYAO.IS',  name: 'Türk Hava Yolları',           sector: 'Havacılık',        exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'PGSUS',  yahooSymbol: 'PGSUS.IS',  name: 'Pegasus Hava Taşımacılığı',   sector: 'Havacılık',        exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'TAVHL',  yahooSymbol: 'TAVHL.IS',  name: 'TAV Havalimanları',          sector: 'Havacılık',        exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'THYAO', yahooSymbol: 'THYAO.IS', name: 'Türk Hava Yolları', sector: 'Havacılık', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'PGSUS', yahooSymbol: 'PGSUS.IS', name: 'Pegasus Hava Taşımacılığı', sector: 'Havacılık', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'TAVHL', yahooSymbol: 'TAVHL.IS', name: 'TAV Havalimanları', sector: 'Havacılık', exchange: 'BIST', currency: 'TRY' },
   // Savunma & Teknoloji
-  { symbol: 'ASELS',  yahooSymbol: 'ASELS.IS',  name: 'Aselsan Elektronik',          sector: 'Savunma Sanayi',   exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'KONTR',  yahooSymbol: 'KONTR.IS',  name: 'Kontrolmatik Teknoloji',      sector: 'Teknoloji',       exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'REEDR',  yahooSymbol: 'REEDR.IS',  name: 'Reeder Teknoloji',           sector: 'Teknoloji',       exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'ASELS', yahooSymbol: 'ASELS.IS', name: 'Aselsan Elektronik', sector: 'Savunma Sanayi', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'KONTR', yahooSymbol: 'KONTR.IS', name: 'Kontrolmatik Teknoloji', sector: 'Teknoloji', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'REEDR', yahooSymbol: 'REEDR.IS', name: 'Reeder Teknoloji', sector: 'Teknoloji', exchange: 'BIST', currency: 'TRY' },
   // Demir Çelik, Madencilik & Kimya
-  { symbol: 'EREGL',  yahooSymbol: 'EREGL.IS',  name: 'Ereğli Demir Çelik',          sector: 'Demir & Çelik',    exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'KRDMD',  yahooSymbol: 'KRDMD.IS',  name: 'Kardemir (D)',               sector: 'Demir & Çelik',    exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'SASA',   yahooSymbol: 'SASA.IS',   name: 'Sasa Polyester',             sector: 'Kimya',            exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'PETKM',  yahooSymbol: 'PETKM.IS',  name: 'Petkim Petrokimya',          sector: 'Kimya',            exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'GUBRF',  yahooSymbol: 'GUBRF.IS',  name: 'Gübre Fabrikaları',          sector: 'Kimya',            exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'HEKTAS', yahooSymbol: 'HEKTAS.IS', name: 'Hektaş Ticaret',             sector: 'Kimya & Tarım',    exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'SISE',   yahooSymbol: 'SISE.IS',   name: 'Türkiye Şişe ve Cam',         sector: 'Cam & Kimya',      exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'KOZAL',  yahooSymbol: 'KOZAL.IS',  name: 'Koza Altın İşletmeleri',     sector: 'Madencilik',       exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'KOZAA',  yahooSymbol: 'KOZAA.IS',  name: 'Koza Anadolu Metal',         sector: 'Madencilik',       exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'EREGL', yahooSymbol: 'EREGL.IS', name: 'Ereğli Demir Çelik', sector: 'Demir & Çelik', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'KRDMD', yahooSymbol: 'KRDMD.IS', name: 'Kardemir (D)', sector: 'Demir & Çelik', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'SASA', yahooSymbol: 'SASA.IS', name: 'Sasa Polyester', sector: 'Kimya', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'PETKM', yahooSymbol: 'PETKM.IS', name: 'Petkim Petrokimya', sector: 'Kimya', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'GUBRF', yahooSymbol: 'GUBRF.IS', name: 'Gübre Fabrikaları', sector: 'Kimya', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'HEKTAS', yahooSymbol: 'HEKTAS.IS', name: 'Hektaş Ticaret', sector: 'Kimya & Tarım', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'SISE', yahooSymbol: 'SISE.IS', name: 'Türkiye Şişe ve Cam', sector: 'Cam & Kimya', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'KOZAL', yahooSymbol: 'KOZAL.IS', name: 'Koza Altın İşletmeleri', sector: 'Madencilik', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'KOZAA', yahooSymbol: 'KOZAA.IS', name: 'Koza Anadolu Metal', sector: 'Madencilik', exchange: 'BIST', currency: 'TRY' },
   // Enerji & Sanayi
-  { symbol: 'TUPRS',  yahooSymbol: 'TUPRS.IS',  name: 'Tüpraş Rafineri',             sector: 'Enerji',           exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'ASTOR',  yahooSymbol: 'ASTOR.IS',  name: 'Astor Enerji',               sector: 'Enerji',           exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'ALFAS',  yahooSymbol: 'ALFAS.IS',  name: 'Alfa Solar Enerji',          sector: 'Enerji',           exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'ODAS',   yahooSymbol: 'ODAS.IS',   name: 'Odaş Elektrik',              sector: 'Enerji',           exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'ENKAI',  yahooSymbol: 'ENKAI.IS',  name: 'Enka İnşaat',                sector: 'İnşaat & Enerji',  exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'OYAKC',  yahooSymbol: 'OYAKC.IS',  name: 'Oyak Çimento',               sector: 'Çimento',          exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'TUPRS', yahooSymbol: 'TUPRS.IS', name: 'Tüpraş Rafineri', sector: 'Enerji', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'ASTOR', yahooSymbol: 'ASTOR.IS', name: 'Astor Enerji', sector: 'Enerji', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'ALFAS', yahooSymbol: 'ALFAS.IS', name: 'Alfa Solar Enerji', sector: 'Enerji', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'ODAS', yahooSymbol: 'ODAS.IS', name: 'Odaş Elektrik', sector: 'Enerji', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'ENKAI', yahooSymbol: 'ENKAI.IS', name: 'Enka İnşaat', sector: 'İnşaat & Enerji', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'OYAKC', yahooSymbol: 'OYAKC.IS', name: 'Oyak Çimento', sector: 'Çimento', exchange: 'BIST', currency: 'TRY' },
   // Otomotiv & Dayanıklı Tüketim
-  { symbol: 'TOASO',  yahooSymbol: 'TOASO.IS',  name: 'Tofaş Otomobil',              sector: 'Otomotiv',         exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'FROTO',  yahooSymbol: 'FROTO.IS',  name: 'Ford Otosan',                sector: 'Otomotiv',         exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'DOAS',   yahooSymbol: 'DOAS.IS',   name: 'Doğuş Otomotiv',             sector: 'Otomotiv',         exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'ARCLK',  yahooSymbol: 'ARCLK.IS',  name: 'Arçelik',                    sector: 'Dayanıklı Tüketim', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'TOASO', yahooSymbol: 'TOASO.IS', name: 'Tofaş Otomobil', sector: 'Otomotiv', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'FROTO', yahooSymbol: 'FROTO.IS', name: 'Ford Otosan', sector: 'Otomotiv', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'DOAS', yahooSymbol: 'DOAS.IS', name: 'Doğuş Otomotiv', sector: 'Otomotiv', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'ARCLK', yahooSymbol: 'ARCLK.IS', name: 'Arçelik', sector: 'Dayanıklı Tüketim', exchange: 'BIST', currency: 'TRY' },
   // Perakende & Telekom & GYO
-  { symbol: 'BIMAS',  yahooSymbol: 'BIMAS.IS',  name: 'BİM Birleşik Mağazalar',      sector: 'Perakende',        exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'SOKM',   yahooSymbol: 'SOKM.IS',   name: 'Şok Marketler',              sector: 'Perakende',        exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'MGROS',  yahooSymbol: 'MGROS.IS',  name: 'Migros Ticaret',             sector: 'Perakende',        exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'TCELL',  yahooSymbol: 'TCELL.IS',  name: 'Turkcell İletişim',            sector: 'Telekomünikasyon', exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'TTKOM',  yahooSymbol: 'TTKOM.IS',  name: 'Türk Telekom',               sector: 'Telekomünikasyon', exchange: 'BIST', currency: 'TRY' },
-  { symbol: 'EKGYO',  yahooSymbol: 'EKGYO.IS',  name: 'Emlak Konut GYO',            sector: 'Gayrimenkul',      exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'BIMAS', yahooSymbol: 'BIMAS.IS', name: 'BİM Birleşik Mağazalar', sector: 'Perakende', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'SOKM', yahooSymbol: 'SOKM.IS', name: 'Şok Marketler', sector: 'Perakende', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'MGROS', yahooSymbol: 'MGROS.IS', name: 'Migros Ticaret', sector: 'Perakende', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'TCELL', yahooSymbol: 'TCELL.IS', name: 'Turkcell İletişim', sector: 'Telekomünikasyon', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'TTKOM', yahooSymbol: 'TTKOM.IS', name: 'Türk Telekom', sector: 'Telekomünikasyon', exchange: 'BIST', currency: 'TRY' },
+  { symbol: 'EKGYO', yahooSymbol: 'EKGYO.IS', name: 'Emlak Konut GYO', sector: 'Gayrimenkul', exchange: 'BIST', currency: 'TRY' },
 ];
 
 const US_STOCKS = [
   // Büyük Teknoloji (Magnificent 7)
-  { symbol: 'AAPL',   yahooSymbol: 'AAPL',   name: 'Apple Inc.',              sector: 'Teknoloji',       exchange: 'NASDAQ', currency: 'USD' },
-  { symbol: 'MSFT',   yahooSymbol: 'MSFT',   name: 'Microsoft Corporation',   sector: 'Yazılım',        exchange: 'NASDAQ', currency: 'USD' },
-  { symbol: 'GOOGL',  yahooSymbol: 'GOOGL',  name: 'Alphabet Inc.',           sector: 'Teknoloji',       exchange: 'NASDAQ', currency: 'USD' },
-  { symbol: 'AMZN',   yahooSymbol: 'AMZN',   name: 'Amazon.com Inc.',         sector: 'E-Ticaret',       exchange: 'NASDAQ', currency: 'USD' },
-  { symbol: 'NVDA',   yahooSymbol: 'NVDA',   name: 'NVIDIA Corporation',      sector: 'Yarı İletken',    exchange: 'NASDAQ', currency: 'USD' },
-  { symbol: 'META',   yahooSymbol: 'META',   name: 'Meta Platforms Inc.',     sector: 'Sosyal Medya',    exchange: 'NASDAQ', currency: 'USD' },
-  { symbol: 'TSLA',   yahooSymbol: 'TSLA',   name: 'Tesla Inc.',              sector: 'Elektrikli Araç', exchange: 'NASDAQ', currency: 'USD' },
+  { symbol: 'AAPL', yahooSymbol: 'AAPL', name: 'Apple Inc.', sector: 'Teknoloji', exchange: 'NASDAQ', currency: 'USD' },
+  { symbol: 'MSFT', yahooSymbol: 'MSFT', name: 'Microsoft Corporation', sector: 'Yazılım', exchange: 'NASDAQ', currency: 'USD' },
+  { symbol: 'GOOGL', yahooSymbol: 'GOOGL', name: 'Alphabet Inc.', sector: 'Teknoloji', exchange: 'NASDAQ', currency: 'USD' },
+  { symbol: 'AMZN', yahooSymbol: 'AMZN', name: 'Amazon.com Inc.', sector: 'E-Ticaret', exchange: 'NASDAQ', currency: 'USD' },
+  { symbol: 'NVDA', yahooSymbol: 'NVDA', name: 'NVIDIA Corporation', sector: 'Yarı İletken', exchange: 'NASDAQ', currency: 'USD' },
+  { symbol: 'META', yahooSymbol: 'META', name: 'Meta Platforms Inc.', sector: 'Sosyal Medya', exchange: 'NASDAQ', currency: 'USD' },
+  { symbol: 'TSLA', yahooSymbol: 'TSLA', name: 'Tesla Inc.', sector: 'Elektrikli Araç', exchange: 'NASDAQ', currency: 'USD' },
   // Yarı İletken & Yazılım
-  { symbol: 'AMD',    yahooSymbol: 'AMD',    name: 'Advanced Micro Devices',  sector: 'Yarı İletken',    exchange: 'NASDAQ', currency: 'USD' },
-  { symbol: 'INTC',   yahooSymbol: 'INTC',   name: 'Intel Corporation',       sector: 'Yarı İletken',    exchange: 'NASDAQ', currency: 'USD' },
-  { symbol: 'CRM',    yahooSymbol: 'CRM',    name: 'Salesforce Inc.',         sector: 'Bulut Yazılım',   exchange: 'NYSE',   currency: 'USD' },
-  { symbol: 'PLTR',   yahooSymbol: 'PLTR',   name: 'Palantir Technologies',   sector: 'Yazılım & Yapay Zeka', exchange: 'NYSE', currency: 'USD' },
-  { symbol: 'SHOP',   yahooSymbol: 'SHOP',   name: 'Shopify Inc.',            sector: 'E-Ticaret Yazılım', exchange: 'NYSE', currency: 'USD' },
+  { symbol: 'AMD', yahooSymbol: 'AMD', name: 'Advanced Micro Devices', sector: 'Yarı İletken', exchange: 'NASDAQ', currency: 'USD' },
+  { symbol: 'INTC', yahooSymbol: 'INTC', name: 'Intel Corporation', sector: 'Yarı İletken', exchange: 'NASDAQ', currency: 'USD' },
+  { symbol: 'CRM', yahooSymbol: 'CRM', name: 'Salesforce Inc.', sector: 'Bulut Yazılım', exchange: 'NYSE', currency: 'USD' },
+  { symbol: 'PLTR', yahooSymbol: 'PLTR', name: 'Palantir Technologies', sector: 'Yazılım & Yapay Zeka', exchange: 'NYSE', currency: 'USD' },
+  { symbol: 'SHOP', yahooSymbol: 'SHOP', name: 'Shopify Inc.', sector: 'E-Ticaret Yazılım', exchange: 'NYSE', currency: 'USD' },
   // Medya & Eğlence
-  { symbol: 'NFLX',   yahooSymbol: 'NFLX',   name: 'Netflix Inc.',            sector: 'Eğlence',        exchange: 'NASDAQ', currency: 'USD' },
-  { symbol: 'DIS',    yahooSymbol: 'DIS',    name: 'Walt Disney Company',     sector: 'Eğlence',        exchange: 'NYSE',   currency: 'USD' },
+  { symbol: 'NFLX', yahooSymbol: 'NFLX', name: 'Netflix Inc.', sector: 'Eğlence', exchange: 'NASDAQ', currency: 'USD' },
+  { symbol: 'DIS', yahooSymbol: 'DIS', name: 'Walt Disney Company', sector: 'Eğlence', exchange: 'NYSE', currency: 'USD' },
   // Finans, Ödeme & Kripto
-  { symbol: 'JPM',    yahooSymbol: 'JPM',    name: 'JPMorgan Chase & Co.',    sector: 'Bankacılık',      exchange: 'NYSE',   currency: 'USD' },
-  { symbol: 'V',      yahooSymbol: 'V',      name: 'Visa Inc.',               sector: 'Finans',          exchange: 'NYSE',   currency: 'USD' },
-  { symbol: 'PYPL',   yahooSymbol: 'PYPL',   name: 'PayPal Holdings',         sector: 'Finansal Teknoloji', exchange: 'NASDAQ', currency: 'USD' },
-  { symbol: 'SQ',     yahooSymbol: 'SQ',     name: 'Block Inc.',              sector: 'Finansal Teknoloji', exchange: 'NYSE',   currency: 'USD' },
-  { symbol: 'COIN',   yahooSymbol: 'COIN',   name: 'Coinbase Global',         sector: 'Kripto Finans',   exchange: 'NASDAQ', currency: 'USD' },
+  { symbol: 'JPM', yahooSymbol: 'JPM', name: 'JPMorgan Chase & Co.', sector: 'Bankacılık', exchange: 'NYSE', currency: 'USD' },
+  { symbol: 'V', yahooSymbol: 'V', name: 'Visa Inc.', sector: 'Finans', exchange: 'NYSE', currency: 'USD' },
+  { symbol: 'PYPL', yahooSymbol: 'PYPL', name: 'PayPal Holdings', sector: 'Finansal Teknoloji', exchange: 'NASDAQ', currency: 'USD' },
+  { symbol: 'SQ', yahooSymbol: 'SQ', name: 'Block Inc.', sector: 'Finansal Teknoloji', exchange: 'NYSE', currency: 'USD' },
+  { symbol: 'COIN', yahooSymbol: 'COIN', name: 'Coinbase Global', sector: 'Kripto Finans', exchange: 'NASDAQ', currency: 'USD' },
   // Sanayi, Perakende & Sağlık
-  { symbol: 'UBER',   yahooSymbol: 'UBER',   name: 'Uber Technologies',       sector: 'Ulaşım',          exchange: 'NYSE',   currency: 'USD' },
-  { symbol: 'BABA',   yahooSymbol: 'BABA',   name: 'Alibaba Group',           sector: 'E-Ticaret',       exchange: 'NYSE',   currency: 'USD' },
-  { symbol: 'BA',     yahooSymbol: 'BA',     name: 'Boeing Company',          sector: 'Havacılık',        exchange: 'NYSE',   currency: 'USD' },
-  { symbol: 'WMT',    yahooSymbol: 'WMT',    name: 'Walmart Inc.',            sector: 'Perakende',        exchange: 'NYSE',   currency: 'USD' },
-  { symbol: 'COST',   yahooSymbol: 'COST',   name: 'Costco Wholesale',        sector: 'Perakende',        exchange: 'NASDAQ', currency: 'USD' },
-  { symbol: 'NKE',    yahooSymbol: 'NKE',    name: 'NIKE Inc.',               sector: 'Tüketim Ürünleri', exchange: 'NYSE',   currency: 'USD' },
-  { symbol: 'PFE',    yahooSymbol: 'PFE',    name: 'Pfizer Inc.',             sector: 'Sağlık & İlaç',    exchange: 'NYSE',   currency: 'USD' },
-  { symbol: 'JNJ',    yahooSymbol: 'JNJ',    name: 'Johnson & Johnson',       sector: 'Sağlık',          exchange: 'NYSE',   currency: 'USD' },
-  { symbol: 'XOM',    yahooSymbol: 'XOM',    name: 'Exxon Mobil Corporation', sector: 'Enerji & Petrol', exchange: 'NYSE',   currency: 'USD' },
+  { symbol: 'UBER', yahooSymbol: 'UBER', name: 'Uber Technologies', sector: 'Ulaşım', exchange: 'NYSE', currency: 'USD' },
+  { symbol: 'BABA', yahooSymbol: 'BABA', name: 'Alibaba Group', sector: 'E-Ticaret', exchange: 'NYSE', currency: 'USD' },
+  { symbol: 'BA', yahooSymbol: 'BA', name: 'Boeing Company', sector: 'Havacılık', exchange: 'NYSE', currency: 'USD' },
+  { symbol: 'WMT', yahooSymbol: 'WMT', name: 'Walmart Inc.', sector: 'Perakende', exchange: 'NYSE', currency: 'USD' },
+  { symbol: 'COST', yahooSymbol: 'COST', name: 'Costco Wholesale', sector: 'Perakende', exchange: 'NASDAQ', currency: 'USD' },
+  { symbol: 'NKE', yahooSymbol: 'NKE', name: 'NIKE Inc.', sector: 'Tüketim Ürünleri', exchange: 'NYSE', currency: 'USD' },
+  { symbol: 'PFE', yahooSymbol: 'PFE', name: 'Pfizer Inc.', sector: 'Sağlık & İlaç', exchange: 'NYSE', currency: 'USD' },
+  { symbol: 'JNJ', yahooSymbol: 'JNJ', name: 'Johnson & Johnson', sector: 'Sağlık', exchange: 'NYSE', currency: 'USD' },
+  { symbol: 'XOM', yahooSymbol: 'XOM', name: 'Exxon Mobil Corporation', sector: 'Enerji & Petrol', exchange: 'NYSE', currency: 'USD' },
 ];
 
 const BASE_STOCKS = [...BIST_STOCKS, ...US_STOCKS];
 
 const BASE_CRYPTOS = [
-  { symbol: 'BTC',   binanceSymbol: 'BTCUSDT',   name: 'Bitcoin',         category: 'Layer 1' },
-  { symbol: 'ETH',   binanceSymbol: 'ETHUSDT',   name: 'Ethereum',        category: 'Layer 1' },
-  { symbol: 'SOL',   binanceSymbol: 'SOLUSDT',   name: 'Solana',          category: 'Layer 1' },
-  { symbol: 'BNB',   binanceSymbol: 'BNBUSDT',   name: 'BNB',             category: 'Layer 1' },
-  { symbol: 'ADA',   binanceSymbol: 'ADAUSDT',   name: 'Cardano',         category: 'Layer 1' },
-  { symbol: 'AVAX',  binanceSymbol: 'AVAXUSDT',  name: 'Avalanche',       category: 'Layer 1' },
-  { symbol: 'DOT',   binanceSymbol: 'DOTUSDT',   name: 'Polkadot',        category: 'Layer 1' },
-  { symbol: 'SUI',   binanceSymbol: 'SUIUSDT',   name: 'Sui',             category: 'Layer 1' },
-  { symbol: 'XRP',   binanceSymbol: 'XRPUSDT',   name: 'Ripple',          category: 'Ödeme' },
-  { symbol: 'XLM',   binanceSymbol: 'XLMUSDT',   name: 'Stellar',         category: 'Ödeme' },
-  { symbol: 'LINK',  binanceSymbol: 'LINKUSDT',  name: 'Chainlink',       category: 'Oracle' },
-  { symbol: 'UNI',   binanceSymbol: 'UNIUSDT',   name: 'Uniswap',         category: 'DeFi' },
-  { symbol: 'AAVE',  binanceSymbol: 'AAVEUSDT',  name: 'Aave',            category: 'DeFi' },
-  { symbol: 'DOGE',  binanceSymbol: 'DOGEUSDT',  name: 'Dogecoin',        category: 'Meme' },
-  { symbol: 'SHIB',  binanceSymbol: 'SHIBUSDT',  name: 'Shiba Inu',       category: 'Meme' },
-  { symbol: 'PEPE',  binanceSymbol: 'PEPEUSDT',  name: 'Pepe',            category: 'Meme' },
+  { symbol: 'BTC', binanceSymbol: 'BTCUSDT', name: 'Bitcoin', category: 'Layer 1' },
+  { symbol: 'ETH', binanceSymbol: 'ETHUSDT', name: 'Ethereum', category: 'Layer 1' },
+  { symbol: 'SOL', binanceSymbol: 'SOLUSDT', name: 'Solana', category: 'Layer 1' },
+  { symbol: 'BNB', binanceSymbol: 'BNBUSDT', name: 'BNB', category: 'Layer 1' },
+  { symbol: 'ADA', binanceSymbol: 'ADAUSDT', name: 'Cardano', category: 'Layer 1' },
+  { symbol: 'AVAX', binanceSymbol: 'AVAXUSDT', name: 'Avalanche', category: 'Layer 1' },
+  { symbol: 'DOT', binanceSymbol: 'DOTUSDT', name: 'Polkadot', category: 'Layer 1' },
+  { symbol: 'SUI', binanceSymbol: 'SUIUSDT', name: 'Sui', category: 'Layer 1' },
+  { symbol: 'XRP', binanceSymbol: 'XRPUSDT', name: 'Ripple', category: 'Ödeme' },
+  { symbol: 'XLM', binanceSymbol: 'XLMUSDT', name: 'Stellar', category: 'Ödeme' },
+  { symbol: 'LINK', binanceSymbol: 'LINKUSDT', name: 'Chainlink', category: 'Oracle' },
+  { symbol: 'UNI', binanceSymbol: 'UNIUSDT', name: 'Uniswap', category: 'DeFi' },
+  { symbol: 'AAVE', binanceSymbol: 'AAVEUSDT', name: 'Aave', category: 'DeFi' },
+  { symbol: 'DOGE', binanceSymbol: 'DOGEUSDT', name: 'Dogecoin', category: 'Meme' },
+  { symbol: 'SHIB', binanceSymbol: 'SHIBUSDT', name: 'Shiba Inu', category: 'Meme' },
+  { symbol: 'PEPE', binanceSymbol: 'PEPEUSDT', name: 'Pepe', category: 'Meme' },
 ];
 
 let cachedStocks = null;
@@ -338,10 +338,67 @@ class MarketService {
         if (chart && chart.price > 0) {
           return { price: parseFloat(chart.price.toFixed(2)), name: symbol.toUpperCase(), type: 'stock' };
         }
-      } catch (err) {}
+      } catch (err) { }
     }
 
     return { price: 0, name: symbol, type: 'stock' };
+  }
+
+  async getStockDetail(symbol) {
+    const stocks = await this.fetchLiveStocks();
+    let stockBase = stocks.find(s => s.symbol.toUpperCase() === symbol.toUpperCase() || s.yahooSymbol?.toUpperCase() === symbol.toUpperCase());
+
+    const yahooSymbol = stockBase?.yahooSymbol || (symbol.includes('.') ? symbol : `${symbol.toUpperCase()}.IS`);
+
+    let chartRes;
+    try {
+      chartRes = await fetchYahooChart(yahooSymbol);
+    } catch (e) {
+      try {
+        chartRes = await fetchYahooChart(symbol.toUpperCase());
+      } catch (err) {
+        throw new Error(`${symbol} hisse senedi verisi alınamadı.`);
+      }
+    }
+
+    if (!stockBase) {
+      stockBase = {
+        symbol: symbol.toUpperCase(),
+        name: symbol.toUpperCase(),
+        sector: 'Genel',
+        exchange: yahooSymbol.endsWith('.IS') ? 'BIST' : 'NASDAQ',
+        currency: chartRes.currency || 'TRY',
+      };
+    }
+
+    const price = chartRes.price;
+    const dayChange = chartRes.dailyPreviousClose > 0
+      ? parseFloat((((price - chartRes.dailyPreviousClose) / chartRes.dailyPreviousClose) * 100).toFixed(2))
+      : 0;
+    const monthChange = chartRes.monthAgoPrice > 0
+      ? parseFloat((((price - chartRes.monthAgoPrice) / chartRes.monthAgoPrice) * 100).toFixed(2))
+      : 0;
+    const yearChange = chartRes.yearAgoPrice > 0
+      ? parseFloat((((price - chartRes.yearAgoPrice) / chartRes.yearAgoPrice) * 100).toFixed(2))
+      : 0;
+
+    const prices = (chartRes.chartHistory || []).map(p => p.price);
+    const high52w = prices.length > 0 ? Math.max(...prices) : price;
+    const low52w = prices.length > 0 ? Math.min(...prices) : price;
+
+    return {
+      ...stockBase,
+      price: parseFloat(price.toFixed(2)),
+      dayChange,
+      monthChange,
+      yearChange,
+      dailyPreviousClose: parseFloat(chartRes.dailyPreviousClose.toFixed(2)),
+      monthAgoPrice: parseFloat(chartRes.monthAgoPrice.toFixed(2)),
+      yearAgoPrice: parseFloat(chartRes.yearAgoPrice.toFixed(2)),
+      high52w: parseFloat(high52w.toFixed(2)),
+      low52w: parseFloat(low52w.toFixed(2)),
+      chartHistory: chartRes.chartHistory || [],
+    };
   }
 }
 

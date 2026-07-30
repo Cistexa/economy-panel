@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Search, Bell, User } from 'lucide-react';
 import api from '../../api/axios';
 import './Navbar.css';
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -25,6 +27,16 @@ const Navbar = () => {
     }
   };
 
+  const handleSelectResult = (item) => {
+    setShowDropdown(false);
+    setQuery('');
+    if (item.type === 'stock') {
+      navigate(`/stocks/${item.symbol}`);
+    } else {
+      navigate('/crypto');
+    }
+  };
+
   return (
     <header className="navbar glass-panel">
       <div className="search-box">
@@ -41,13 +53,17 @@ const Navbar = () => {
         {showDropdown && searchResults.length > 0 && (
           <div className="search-results-dropdown glass-panel">
             {searchResults.map((item) => (
-              <div key={item.symbol} className="search-result-item">
+              <div
+                key={item.symbol}
+                className="search-result-item"
+                onMouseDown={() => handleSelectResult(item)}
+              >
                 <div className="search-result-left">
                   <span className="symbol-badge">{item.symbol}</span>
                   <span className="name">{item.name}</span>
                 </div>
                 <div className="search-result-right">
-                  <span className="price">${item.price}</span>
+                  <span className="price">{item.currency === 'TRY' ? '₺' : '$'}{item.price}</span>
                   <span className={`type-tag ${item.type}`}>{item.type === 'stock' ? 'Hisse' : 'Kripto'}</span>
                 </div>
               </div>
