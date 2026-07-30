@@ -1,0 +1,62 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: economy_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-economy_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-economy_pass}
+      POSTGRES_DB: ${POSTGRES_DB:-economy_db}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-economy_user} -d ${POSTGRES_DB:-economy_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: economy_backend
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      PORT: 5000
+      NODE_ENV: development
+      POSTGRES_USER: ${POSTGRES_USER:-economy_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-economy_pass}
+      POSTGRES_DB: ${POSTGRES_DB:-economy_db}
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      JWT_SECRET: ${JWT_SECRET:-super_secret_jwt_key_economy_panel_2026}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-7d}
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: economy_frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_API_URL=http://localhost:5000/api
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+volumes:
+  postgres_data:
