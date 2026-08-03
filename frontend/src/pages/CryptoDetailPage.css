@@ -1,4 +1,4 @@
-.stock-detail-page {
+.crypto-detail-page {
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -32,46 +32,8 @@
   border-color: var(--border-highlight);
 }
 
-.detail-search-box {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 6px 12px;
-  width: 440px;
-  max-width: 100%;
-}
-
-.detail-search-box .search-icon {
-  color: var(--text-muted);
-  flex-shrink: 0;
-}
-
-.detail-search-box input {
-  width: 100%;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: var(--text-primary);
-  font-size: 0.88rem;
-}
-
-.btn-search-submit {
-  padding: 6px 14px;
-  background: var(--primary);
-  color: white;
-  border-radius: var(--radius-sm);
-  font-weight: 600;
-  font-size: 0.82rem;
-  transition: background 0.2s ease;
-  white-space: nowrap;
-}
-
-.btn-search-submit:hover {
-  background: var(--primary-hover);
-}
-
 /* Header Card */
-.stock-header-card {
+.crypto-header-card {
   padding: 24px 30px;
   display: flex;
   align-items: center;
@@ -81,41 +43,38 @@
   background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.9) 100%);
 }
 
-.stock-header-info {
+.crypto-header-info {
   display: flex;
   align-items: center;
   gap: 18px;
 }
 
-.stock-avatar {
+.crypto-avatar {
   width: 54px;
   height: 54px;
   border-radius: var(--radius-md);
-  background: linear-gradient(135deg, var(--primary) 0%, #4f46e5 100%);
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 800;
-  font-size: 1.3rem;
-  color: #fff;
-  box-shadow: 0 4px 15px var(--primary-glow);
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
 }
 
-.stock-title-row {
+.crypto-title-row {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.stock-title-row h1 {
+.crypto-title-row h1 {
   font-size: 1.8rem;
   font-weight: 800;
   color: var(--text-primary);
 }
 
 .badge-exchange {
-  background: rgba(99, 102, 241, 0.15);
-  color: #a5b4fc;
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
 }
 
 .badge-sector {
@@ -123,13 +82,13 @@
   color: var(--text-secondary);
 }
 
-.stock-company-name {
+.crypto-company-name {
   font-size: 0.92rem;
   color: var(--text-secondary);
   margin-top: 2px;
 }
 
-.stock-header-price {
+.crypto-header-price {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -239,7 +198,7 @@
 }
 
 .chart-icon {
-  color: var(--primary);
+  color: #f59e0b;
 }
 
 .detail-error {

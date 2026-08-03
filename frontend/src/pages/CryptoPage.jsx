@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Coins, TrendingUp, TrendingDown, Search } from 'lucide-react';
 import api from '../api/axios';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import './CryptoPage.css';
 
 const CryptoPage = () => {
+  const navigate = useNavigate();
   const [cryptos, setCryptos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -55,7 +57,11 @@ const CryptoPage = () => {
       ) : (
         <div className="crypto-grid">
           {filteredCryptos.map((crypto) => (
-            <div key={crypto.symbol} className="crypto-card glass-panel">
+            <div
+              key={crypto.symbol}
+              className="crypto-card glass-panel"
+              onClick={() => navigate(`/crypto/${crypto.symbol}`)}
+            >
               <div className="crypto-card-top">
                 <div className="crypto-icon-box">
                   <Coins size={22} color="#f59e0b" />

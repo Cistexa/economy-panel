@@ -130,19 +130,36 @@ async function fetchYahooChart(yahooSymbol) {
   const meta = result.meta;
   const currentPrice = meta.regularMarketPrice;
 
-  const closes = result.indicators?.quote?.[0]?.close || [];
+  const quote = result.indicators?.quote?.[0] || {};
+  const opens = quote.open || [];
+  const highs = quote.high || [];
+  const lows = quote.low || [];
+  const closes = quote.close || [];
+  const volumes = quote.volume || [];
   const timestamps = result.timestamp || [];
 
-  const validCloses = [];
+  const validPoints = [];
   for (let i = 0; i < closes.length; i++) {
     if (closes[i] != null && timestamps[i] != null) {
-      validCloses.push({ ts: timestamps[i] * 1000, close: closes[i] });
+      const close = closes[i];
+      const open = opens[i] != null ? opens[i] : close;
+      const high = highs[i] != null ? highs[i] : Math.max(open, close);
+      const low = lows[i] != null ? lows[i] : Math.min(open, close);
+      const volume = volumes[i] != null ? volumes[i] : 0;
+      validPoints.push({
+        ts: timestamps[i] * 1000,
+        close,
+        open,
+        high,
+        low,
+        volume,
+      });
     }
   }
 
   let dailyPreviousClose = currentPrice;
-  if (validCloses.length >= 2) {
-    dailyPreviousClose = validCloses[validCloses.length - 2].close;
+  if (validPoints.length >= 2) {
+    dailyPreviousClose = validPoints[validPoints.length - 2].close;
   }
 
   const now = Date.now();
@@ -150,7 +167,7 @@ async function fetchYahooChart(yahooSymbol) {
   let monthAgoPrice = dailyPreviousClose;
   let minMonthDiff = Infinity;
 
-  for (const dp of validCloses) {
+  for (const dp of validPoints) {
     const diff = Math.abs(dp.ts - oneMonthAgo);
     if (diff < minMonthDiff) {
       minMonthDiff = diff;
@@ -159,14 +176,18 @@ async function fetchYahooChart(yahooSymbol) {
   }
 
   let yearAgoPrice = currentPrice;
-  if (validCloses.length > 0) {
-    yearAgoPrice = validCloses[0].close;
+  if (validPoints.length > 0) {
+    yearAgoPrice = validPoints[0].close;
   }
 
-  const chartHistory = validCloses.map(item => ({
+  const chartHistory = validPoints.map(item => ({
     date: new Date(item.ts).toLocaleDateString('tr-TR', { month: 'short', day: 'numeric' }),
     fullDate: new Date(item.ts).toISOString().split('T')[0],
     price: parseFloat(item.close.toFixed(2)),
+    open: parseFloat(item.open.toFixed(2)),
+    high: parseFloat(item.high.toFixed(2)),
+    low: parseFloat(item.low.toFixed(2)),
+    volume: Math.round(item.volume),
   }));
 
   return {
@@ -183,6 +204,71 @@ async function fetchBinanceTickers() {
   const response = await fetch('https://api.binance.com/api/v3/ticker/24hr');
   if (!response.ok) throw new Error('Binance API error');
   return await response.json();
+}
+
+async function fetchBinanceKlines(binanceSymbol) {
+  const url = `https://api.binance.com/api/v3/klines?symbol=${binanceSymbol}&interval=1d&limit=365`;
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`Binance klines ${binanceSymbol}: HTTP ${response.status}`);
+  const klines = await response.json();
+
+  if (!Array.isArray(klines) || klines.length === 0) {
+    throw new Error(`Binance klines ${binanceSymbol}: empty result`);
+  }
+
+  const validPoints = klines.map(k => ({
+    ts: k[0],
+    open: parseFloat(k[1]),
+    high: parseFloat(k[2]),
+    low: parseFloat(k[3]),
+    close: parseFloat(k[4]),
+    volume: parseFloat(k[5]),
+  }));
+
+  const currentPrice = validPoints[validPoints.length - 1].close;
+  let dailyPreviousClose = currentPrice;
+  if (validPoints.length >= 2) {
+    dailyPreviousClose = validPoints[validPoints.length - 2].close;
+  }
+
+  const now = Date.now();
+  const oneMonthAgo = now - (30 * 24 * 60 * 60 * 1000);
+  let monthAgoPrice = dailyPreviousClose;
+  let minMonthDiff = Infinity;
+
+  for (const dp of validPoints) {
+    const diff = Math.abs(dp.ts - oneMonthAgo);
+    if (diff < minMonthDiff) {
+      minMonthDiff = diff;
+      monthAgoPrice = dp.close;
+    }
+  }
+
+  let yearAgoPrice = currentPrice;
+  if (validPoints.length > 0) {
+    yearAgoPrice = validPoints[0].close;
+  }
+
+  const formatNum = (val) => val < 1 ? parseFloat(val.toFixed(6)) : parseFloat(val.toFixed(2));
+
+  const chartHistory = validPoints.map(item => ({
+    date: new Date(item.ts).toLocaleDateString('tr-TR', { month: 'short', day: 'numeric' }),
+    fullDate: new Date(item.ts).toISOString().split('T')[0],
+    price: formatNum(item.close),
+    open: formatNum(item.open),
+    high: formatNum(item.high),
+    low: formatNum(item.low),
+    volume: Math.round(item.volume),
+  }));
+
+  return {
+    price: currentPrice,
+    dailyPreviousClose,
+    monthAgoPrice,
+    yearAgoPrice,
+    currency: 'USD',
+    chartHistory,
+  };
 }
 
 class MarketService {
@@ -404,6 +490,67 @@ class MarketService {
       yearAgoPrice: parseFloat(chartRes.yearAgoPrice.toFixed(2)),
       high52w: parseFloat(high52w.toFixed(2)),
       low52w: parseFloat(low52w.toFixed(2)),
+      chartHistory: chartRes.chartHistory || [],
+    };
+  }
+
+  async getCryptoDetail(symbol) {
+    const cryptos = await this.fetchLiveCryptos();
+    let cryptoBase = cryptos.find(c => c.symbol.toUpperCase() === symbol.toUpperCase());
+
+    const binanceSymbol = cryptoBase?.binanceSymbol || `${symbol.toUpperCase()}USDT`;
+
+    let chartRes;
+    try {
+      chartRes = await fetchBinanceKlines(binanceSymbol);
+    } catch (e) {
+      try {
+        const yahooSymbol = `${symbol.toUpperCase()}-USD`;
+        chartRes = await fetchYahooChart(yahooSymbol);
+        chartRes.currency = 'USD';
+      } catch (err) {
+        throw new Error(`${symbol} kripto para verisi alınamadı.`);
+      }
+    }
+
+    if (!cryptoBase) {
+      cryptoBase = {
+        symbol: symbol.toUpperCase(),
+        name: symbol.toUpperCase(),
+        category: 'Kripto',
+        binanceSymbol,
+      };
+    }
+
+    const price = chartRes.price;
+    const dayChange = chartRes.dailyPreviousClose > 0
+      ? parseFloat((((price - chartRes.dailyPreviousClose) / chartRes.dailyPreviousClose) * 100).toFixed(2))
+      : 0;
+    const monthChange = chartRes.monthAgoPrice > 0
+      ? parseFloat((((price - chartRes.monthAgoPrice) / chartRes.monthAgoPrice) * 100).toFixed(2))
+      : 0;
+    const yearChange = chartRes.yearAgoPrice > 0
+      ? parseFloat((((price - chartRes.yearAgoPrice) / chartRes.yearAgoPrice) * 100).toFixed(2))
+      : 0;
+
+    const prices = (chartRes.chartHistory || []).map(p => p.price);
+    const high52w = prices.length > 0 ? Math.max(...prices) : price;
+    const low52w = prices.length > 0 ? Math.min(...prices) : price;
+
+    const formatNum = (val) => val < 1 ? parseFloat(val.toFixed(6)) : parseFloat(val.toFixed(2));
+
+    return {
+      ...cryptoBase,
+      price: formatNum(price),
+      dayChange,
+      monthChange,
+      yearChange,
+      dailyPreviousClose: formatNum(chartRes.dailyPreviousClose),
+      monthAgoPrice: formatNum(chartRes.monthAgoPrice),
+      yearAgoPrice: formatNum(chartRes.yearAgoPrice),
+      high52w: formatNum(high52w),
+      low52w: formatNum(low52w),
+      currency: 'USD',
       chartHistory: chartRes.chartHistory || [],
     };
   }

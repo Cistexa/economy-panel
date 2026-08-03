@@ -19,7 +19,18 @@ const getCryptos = async (req, res, next) => {
   }
 };
 
+const getCryptoDetail = async (req, res, next) => {
+  try {
+    const { symbol } = req.params;
+    const detail = await marketService.getCryptoDetail(symbol);
+    res.json(detail);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getTopMovers,
   getCryptos,
+  getCryptoDetail,
 };
